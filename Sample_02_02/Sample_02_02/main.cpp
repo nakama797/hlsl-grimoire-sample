@@ -1,4 +1,4 @@
-﻿#include "stdafx.h"
+#include "stdafx.h"
 #include "system/system.h"
 
 // 頂点構造体
@@ -28,6 +28,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
     RootSignature rootSignature;
     InitRootSignature(rootSignature);
 
+
     // 2. シェーダーをロード
     Shader vs, ps;
     vs.LoadVS("Assets/shader/sample.fx", "VSMain");
@@ -51,7 +52,11 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
         {
             { 0.5f, -0.5f, 0.0f },
             { 0.0f, 0.0f, 1.0f }
+        },
+        {
+
         }
+
     };
 
     VertexBuffer triangleVB;
@@ -61,7 +66,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
     // 5. 三角形のインデックスバッファを作成
     //インデックス配列
     uint16_t indices[] = {
-        0,1,2
+        0,1,2,0,2,3
     };
     IndexBuffer triangleIB;
     triangleIB.Init(sizeof(indices), 2);
@@ -93,7 +98,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
         // 5. インデックスバッファを設定
         renderContext.SetIndexBuffer(triangleIB);
         // 6. ドローコール
-        renderContext.DrawIndexed(3);
+        renderContext.DrawIndexed(_countof(indices));
 
         /// //////////////////////////////////////
         // 絵を描くコードを書くのはここまで！！！
@@ -145,3 +150,5 @@ void InitPipelineState(PipelineState& pipelineState, RootSignature& rs, Shader& 
     psoDesc.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM;
     pipelineState.Init(psoDesc);
 }
+
+
